@@ -1,0 +1,116 @@
+/* Reinicia márgenes y padding del body y html */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box; /* Incluye padding y border en el ancho total */
+  font-family: sans-serif;
+}
+
+/* Menú fijo en la parte superior */
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;                  /* Altura fija del menú */
+  background-color: #007bff;
+  color: white;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;       /* Centra los elementos horizontalmente */
+  align-items: center;           /* Centra los elementos verticalmente */
+  gap: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* Contenedor principal ocupa todo el ancho y centra contenido */
+.original-container {
+  width: 100vw;                  /* Ocupa todo el viewport */
+  max-width: 100%;
+  margin: 0 auto;                /* Centrado horizontal */
+  padding: 80px 20px 20px 20px;  /* Deja espacio para el menú fijo */
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;           /* Centra todo el contenido */
+}
+
+/* Contenedor de los selects */
+.selects {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 800px;              /* Para no expandirse demasiado en pantallas grandes */
+}
+
+/* Estilo de los selects */
+select {
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  flex: 1;
+  min-width: 150px;
+}
+
+/* Contenedor de comparación de cartas */
+.compare-cards {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Cada carta individual */
+.card {
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  width: 22vw;
+  max-width: 250px;
+  min-width: 150px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+/* Título centrado */
+.original-container h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+/* Botones */
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

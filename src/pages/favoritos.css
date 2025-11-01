@@ -1,0 +1,50 @@
+/* Contenedor principal centrado y ocupa todo el ancho */
+.favoritos-container {
+  width: 100vw;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra todo horizontalmente */
+  box-sizing: border-box;
+}
+
+/* Título centrado */
+.favoritos-container h1 {
+  margin-bottom: 20px;
+  font-size: 2em;
+  text-align: center;
+}
+
+/* Contenedor de cartas centrado */
+.favoritos-grid {
+  display: flex;
+  flex-wrap: wrap;        /* Permite que las cartas bajen a otra fila en móviles */
+  justify-content: center; /* Centra horizontalmente todas las cartas */
+  gap: 20px;               /* Espacio entre cartas */
+  width: 100%;
+}
+
+/* Cada carta individual */
+.favorito-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 150px;
+  width: 100%; /* Para que se adapte al contenedor */
+}
+
+.favorito-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Mensaje centrado */
+.favoritos-message {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+}

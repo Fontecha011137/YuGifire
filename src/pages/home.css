@@ -1,0 +1,56 @@
+/* home.css */
+
+/* Contenedor principal */
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+/* Título */
+.home h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Buscador y filtro */
+.home input,
+.home select {
+  margin: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+/* Contenedor de cartas */
+/* Contenedor de todas las cartas */
+.home .grid {
+  display: flex;
+  flex-wrap: wrap; /* permite que las cartas pasen a la siguiente fila */
+  justify-content: center; /* centra las cartas en la pantalla */
+  gap: 16px; /* espacio entre cartas */
+  padding: 16px;
+}
+
+/* Cada carta individual */
+.card-item {
+  width: 150px; /* ancho fijo para todas las cartas */
+  text-align: center;
+}
+
+.card-item img {
+  width: 100%; /* la imagen ocupa el ancho de la carta */
+  height: auto; /* mantiene proporción */
+  cursor: pointer;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.card-item img:hover {
+  transform: scale(1.05); /* efecto de zoom al pasar el mouse */
+}
+

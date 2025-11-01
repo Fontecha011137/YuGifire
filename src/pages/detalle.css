@@ -1,0 +1,83 @@
+/* Contenedor principal centrado y ancho completo */
+.detalle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 100vw; /* Ocupa todo el ancho de la ventana */
+  box-sizing: border-box;
+  margin: 0; /* Quitar márgenes por defecto */
+}
+
+/* Contenedor de la carta y su info */
+.detalle-card {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+  width: 90%; /* Ancho relativo */
+  max-width: none; /* Elimina límite de ancho */
+  justify-content: center; /* Centrar contenido */
+  flex-wrap: wrap; /* Para responsivo */
+}
+
+/* Imagen de la carta */
+.detalle-card img {
+  width: 100%;
+  max-width: 300px; /* Tamaño relativo */
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Información de la carta */
+.detalle-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center; /* Centra texto e info */
+}
+
+/* Botón agregar a favoritos */
+.detalle-info button {
+  padding: 10px 20px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: center; /* Centrar botón */
+}
+
+.detalle-info button:hover {
+  background-color: #357abd;
+}
+
+/* Títulos */
+.detalle-container h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  text-align: center; /* Centra el título */
+}
+
+.detalle-info h2 {
+  margin: 0;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+  .detalle-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .detalle-card img {
+    max-width: 90%;
+  }
+
+  .detalle-info {
+    width: 100%;
+  }
+}

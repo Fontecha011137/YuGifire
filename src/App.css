@@ -1,0 +1,43 @@
+/* Contenedor principal de la página */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* empieza desde arriba */
+  align-items: center;         /* centra horizontalmente */
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f0f2f5;
+}
+
+/* Contenedor de cartas en filas automáticas */
+.card-list {
+  display: flex;
+  flex-wrap: wrap;           /* permite múltiples filas */
+  justify-content: center;   /* centra las filas horizontalmente */
+  gap: 20px;                 /* espacio entre cartas */
+  width: 100%;
+  max-width: 1200px;         /* opcional: limita el ancho total */
+}
+
+/* Cada carta */
+.card-item {
+  width: 150px;              /* ancho fijo */
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  background-color: #fff;
+  transition: transform 0.2s;
+}
+
+.card-item:hover {
+  transform: scale(1.05);
+}
+
+/* Imagen dentro de la carta */
+.card-item img {
+  width: 100%;
+  border-radius: 4px;
+}
