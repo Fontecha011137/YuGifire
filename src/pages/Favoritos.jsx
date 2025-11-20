@@ -1,44 +1,71 @@
+"use client";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { db, auth } from "../firebaseConfig";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import "./favoritos.css"; // Creamos un CSS especial para favoritos
+import { collection, query, where, getDocs } from "firebase/firestore";
+import "./favoritos.css";
 
-export default function Favoritos() {
+export default function FavoritosPage() {
   const [favoritos, setFavoritos] = useState([]);
-  const [user, setUser] = useState(null);
 
+  // Cargar favoritos desde Firebase
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((u) => {
-      setUser(u);
-      if (u) fetchFavoritos(u.uid);
-    });
-    return unsubscribe;
+    const loadFavs = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const q = query(
+        collection(db, "favoritos"),
+        where("userId", "==", user.uid)
+      );
+
+      const snapshot = await getDocs(q);
+
+      const list = snapshot.docs.map((d) => ({
+        firebaseId: d.id,
+        ...d.data(),
+      }));
+
+      setFavoritos(list);
+    };
+
+    loadFavs();
   }, []);
-
-  const fetchFavoritos = async (uid) => {
-    const q = query(collection(db, "favoritos"), where("userId", "==", uid));
-    const snapshot = await getDocs(q);
-    const favs = snapshot.docs.map((doc) => doc.data());
-    setFavoritos(favs);
-  };
-
-  if (!user) return <p className="favoritos-message">Inicia sesión para ver tus favoritos.</p>;
 
   return (
     <div className="favoritos-container">
-      <h1>Mis Favoritos</h1>
-      {favoritos.length === 0 ? (
-        <p className="favoritos-message">No tienes cartas guardadas.</p>
-      ) : (
-        <div className="favoritos-grid">
-          {favoritos.map((card) => (
-            <div key={card.id} className="favorito-card">
-              <img src={card.image} alt={card.name} />
-              <p>{card.name}</p>
-            </div>
-          ))}
-        </div>
+      <h1>Mis Cartas Favoritas</h1>
+
+      {favoritos.length === 0 && (
+        <p className="favoritos-message">No tienes cartas favoritas aún.</p>
       )}
+
+      <div className="favoritos-grid">
+        {favoritos.map((carta) => (
+          <div key={carta.firebaseId} className="favorito-card">
+            <Link
+              to={`/detalle/${carta.id}`}
+              state={{
+                fromFavorites: true,
+                firebaseId: carta.firebaseId,
+              }}
+            >
+              <img src={carta.image} alt={carta.name} />
+            </Link>
+
+            <h3>{carta.name}</h3>
+
+            {/* ⭐ Mostrar ATK y DEF si existen */}
+            {carta.atk !== undefined && carta.def !== undefined ? (
+              <p>
+                <strong>ATK:</strong> {carta.atk} / <strong>DEF:</strong> {carta.def}
+              </p>
+            ) : (
+              <p className="no-stats">Sin estadísticas disponibles.</p>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

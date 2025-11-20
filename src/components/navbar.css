@@ -1,41 +1,86 @@
-/* Contenedor del menú fijo en la parte superior */
+/* ===== NAVBAR GENERAL ===== */
 .navbar {
-  position: fixed;       /* Fijo en la parte superior */
-  top: 0;
-  left: 0;
-  width: 100%;           /* Ocupa todo el ancho */
-  background-color: #007bff;
-  padding: 10px 0;
-  z-index: 1000;         /* Siempre por encima del contenido */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+background-color: #007bff;
+padding: 10px 0;
+z-index: 1000;
+box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+display: flex;
+align-items: center;
 }
 
-/* Lista de enlaces centrada */
+/* ===== LINKS EN ESCRITORIO ===== */
 .navbar-links {
-  list-style: none;
-  display: flex;
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  gap: 20px;             /* Espacio entre enlaces */
+list-style: none;
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 0 auto;
+padding: 0;
+gap: 20px;
 }
 
-/* Estilo de cada enlace */
 .nav-item {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  padding: 8px 12px;
-  transition: background 0.2s, color 0.2s;
-  border-radius: 5px;
+color: white;
+text-decoration: none;
+font-weight: bold;
+padding: 8px 12px;
+transition: background 0.2s, color 0.2s;
+border-radius: 5px;
 }
 
 .nav-item:hover {
-  background-color: #0056b3;
+background-color: #0056b3;
 }
 
-/* Para indicar la página activa */
 .nav-item.active {
-  background-color: #004080;
+background-color: #004080;
+}
+
+/* ===== HAMBURGUESA ===== */
+.hamburger {
+display: none;
+flex-direction: column;
+gap: 5px;
+cursor: pointer;
+margin-left: 15px;
+}
+
+.line {
+width: 25px;
+height: 3px;
+background: white;
+transition: 0.3s;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+
+/* Mostrar hamburguesa */
+.hamburger {
+display: flex;
+}
+
+/* Ocultar menú por defecto */
+.navbar-links {
+display: none;
+flex-direction: column;
+position: absolute;
+top: 55px;
+right: 10px;
+background-color: #0056b3;
+padding: 15px;
+gap: 15px;
+border-radius: 8px;
+width: 180px;
+box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+/* Mostrar menú al abrir */
+.navbar-links.active {
+display: flex;
+}
 }

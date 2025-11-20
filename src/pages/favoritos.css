@@ -1,50 +1,56 @@
-/* Contenedor principal centrado y ocupa todo el ancho */
+/* Contenedor principal */
 .favoritos-container {
-  width: 100vw;
-  padding: 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* centra todo horizontalmente */
-  box-sizing: border-box;
+width: 100vw;
+padding: 20px;
+box-sizing: border-box;
+text-align: center;
+display: flex;
+flex-direction: column;
+align-items: center;
 }
 
-/* Título centrado */
-.favoritos-container h1 {
-  margin-bottom: 20px;
-  font-size: 2em;
-  text-align: center;
-}
-
-/* Contenedor de cartas centrado */
+/* Grid de cartas */
 .favoritos-grid {
-  display: flex;
-  flex-wrap: wrap;        /* Permite que las cartas bajen a otra fila en móviles */
-  justify-content: center; /* Centra horizontalmente todas las cartas */
-  gap: 20px;               /* Espacio entre cartas */
-  width: 100%;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 20px;
+width: 100%;
 }
 
-/* Cada carta individual */
+/* Carta individual */
 .favorito-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 150px;
-  width: 100%; /* Para que se adapte al contenedor */
+width: 160px;
+background: #ffffff;
+padding: 15px;
+border-radius: 10px;
+box-shadow: 0 0 8px rgba(0,0,0,0.2);
+text-align: center;
+display: flex;
+flex-direction: column;
+align-items: center;
 }
 
+/* Imagen */
 .favorito-card img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  object-fit: cover;
+width: 100%;
+border-radius: 8px;
+margin-bottom: 10px;
 }
 
-/* Mensaje centrado */
-.favoritos-message {
-  margin-top: 20px;
-  font-size: 1rem;
-  color: #555;
-  text-align: center;
+/* Botón */
+.favorito-btn {
+margin-top: 10px;
+padding: 10px;
+width: 100%;
+background: #e60000;
+color: white;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+font-size: 0.9rem;
+}
+
+.favorito-btn:hover {
+background: #b30000;
 }

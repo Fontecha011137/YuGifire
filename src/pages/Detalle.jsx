@@ -1,84 +1,111 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { db, auth } from "../firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, deleteDoc, doc } from "firebase/firestore";
 import "./detalle.css";
 
 export default function Detalle() {
   const { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const fromFavorites = location.state?.fromFavorites || false;
+  const firebaseId = location.state?.firebaseId || null;
+
   const [card, setCard] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [favoriteMessage, setFavoriteMessage] = useState("");
 
-  // Obtener carta desde la API
+  // Detectar usuario autenticado
   useEffect(() => {
-    setLoading(true);
-    axios.get(`https://db.ygoprodeck.com/api/v7/cardinfo.php?id=${id}`)
-      .then(res => {
-        setCard(res.data.data[0]);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, [id]);
-
-  // Revisar usuario autenticado
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(u => {
-      console.log("Usuario autenticado:", u); // <-- Aquí ves al usuario en consola
+    const unsub = auth.onAuthStateChanged((u) => {
       setUser(u);
     });
-    return unsubscribe;
+    return () => unsub();
   }, []);
 
-  // Función para agregar a favoritos
-const addToFavorites = async () => {
-  if (!user) {
-    alert("Debes iniciar sesión para agregar a favoritos.");
-    return;
-  }
+  // Cargar carta desde API siempre, aunque venga de favoritos
+  useEffect(() => {
+    const fetchCard = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get(
+          `https://db.ygoprodeck.com/api/v7/cardinfo.php?id=${id}`
+        );
+        setCard(res.data.data[0]);
+      } catch (error) {
+        console.error(error);
+        alert("No se pudo cargar la carta.");
+      }
+      setLoading(false);
+    };
 
-  try {
-    console.log("UID del usuario:", user.uid);
-    console.log("Carta a agregar:", card);
+    fetchCard();
+  }, [id]);
+
+  // Agregar a favoritos
+  const addToFavorites = async () => {
+    if (!user) {
+      alert("Debes iniciar sesión para agregar a favoritos.");
+      return;
+    }
 
     await addDoc(collection(db, "favoritos"), {
       id: card.id,
       name: card.name,
       image: card.card_images[0].image_url,
+      atk: card.atk,
+      def: card.def,
       userId: user.uid,
     });
-    alert("Carta agregada a favoritos!");
-  } catch (error) {
-    console.error("Error al agregar a favoritos:", error);
-    alert("Ocurrió un error al agregar a favoritos: " + error.message);
-  }
-};
 
+    alert("Carta agregada a favoritos!");
+  };
+
+  // Quitar de favoritos
+  const removeFromFavorites = async () => {
+    if (!firebaseId) return;
+
+    await deleteDoc(doc(db, "favoritos", firebaseId));
+    alert("Carta retirada de favoritos");
+    navigate("/favoritos");
+  };
 
   if (loading) return <p>Cargando...</p>;
 
   return (
     <div className="detalle-container">
       <h1>Detalle</h1>
+
       {card ? (
         <div className="detalle-card">
-          <img 
-            src={card.card_images?.[0]?.image_url} 
-            alt={card.name} 
-          />
+          <img src={card.card_images?.[0]?.image_url} alt={card.name} />
+
           <div className="detalle-info">
             <h2>{card.name}</h2>
-            <p><strong>Tipo:</strong> {card.type}</p>
-            <p><strong>ATK:</strong> {card.atk}</p>
-            <p><strong>DEF:</strong> {card.def}</p>
-            <p><strong>Descripción:</strong> {card.desc}</p>
-            <button onClick={addToFavorites}>Agregar a favoritos</button>
-            {favoriteMessage && <p>{favoriteMessage}</p>}
+            <p>
+              <strong>Tipo:</strong> {card.type}
+            </p>
+            <p>
+              <strong>ATK:</strong> {card.atk ?? "N/A"}
+            </p>
+            <p>
+              <strong>DEF:</strong> {card.def ?? "N/A"}
+            </p>
+            <p>
+              <strong>Descripción:</strong> {card.desc}
+            </p>
+
+            {!fromFavorites && (
+              <button onClick={addToFavorites}>Agregar a favoritos</button>
+            )}
+
+            {fromFavorites && (
+              <button onClick={removeFromFavorites}>
+                Quitar de favoritos
+              </button>
+            )}
           </div>
         </div>
       ) : (

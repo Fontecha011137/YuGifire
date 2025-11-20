@@ -28,11 +28,13 @@
 .informativa-container h1 {
   text-align: center;
   margin-bottom: 20px;
+  color: #222; /* Color oscuro para el título */
 }
 
 .informativa-content p {
   font-size: 1rem;
   line-height: 1.5;
+  color: #222; /* Color oscuro para el texto */
 }
 
 /* Responsive */
